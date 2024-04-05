@@ -2,7 +2,28 @@ import { useEffect, useState } from "react";
 import LoadingButton from '@/components/loadingbutton';
 import Modal from '@/components/modal';
 import Input from '@/components/input';
+import {isMobilePhone, isEmail} from 'validator'
 const SignUp = (props: SignUpProps) => {
+    useEffect(() => {
+        if (isMobilePhone(phoneNumber)) {
+            setDisableSendOTP(false);
+
+        } else {
+            setDisableSendOTP(true);
+        }
+
+        if (OTPCode.length !== 6) {
+            setDisableSubmitPhone(true)
+        } else {
+            setDisableSubmitPhone(false)
+        }
+
+        if (isEmail(email) && password.length >= 6) {
+            setDisableSubmitEmail(false);
+        } else {
+            setDisableSubmitEmail(true);
+        }
+    }, [email, password, phoneNumber, OTPCode]);
 
     return (
         <Modal show={props.open} setShow={props.setOpen}>  
@@ -12,6 +33,7 @@ const SignUp = (props: SignUpProps) => {
                 <Input
                 />
                 <LoadingButton
+                    disabled={disableSubmitEmail}
                 >
                     Sign Up with Email
                 </LoadingButton>
@@ -24,12 +46,14 @@ const SignUp = (props: SignUpProps) => {
                     </div>
                 </div>
                 <Input
+                    disabled={disableSendOTP}
                 >
                     Send OTP
                 </LoadingButton>
                 <Input
                 />
                 <LoadingButton
+                    disabled={disableSubmitPhone}
                 >
                     Sign Up with Phone Number
                 </LoadingButton>
