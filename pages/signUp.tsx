@@ -4,6 +4,12 @@ import Modal from '@/components/modal';
 import Input from '@/components/input';
 import {isMobilePhone, isEmail} from 'validator'
 const SignUp = (props: SignUpProps) => {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [disableSubmitEmail, setDisableSubmitEmail] = useState(true);
+    const [disableSendOTP, setDisableSendOTP] = useState(true);
+    const [disableSubmitPhone, setDisableSubmitPhone] = useState(true);
     useEffect(() => {
         if (isMobilePhone(phoneNumber)) {
             setDisableSendOTP(false);
