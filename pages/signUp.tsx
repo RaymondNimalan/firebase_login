@@ -14,6 +14,30 @@ const SignUp = (props: SignUpProps) => {
     const [OTPCode, setOTPCode] = useState('');
     const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
     const [recaptchaResolved, setRecaptchaResolved] = useState(false)
+    const sendOTP = async () => {
+        try {
+            const recaptcha = new RecaptchaVerifier(firebaseAuth, "recaptcha", {
+                size: 'normal',
+                callback: () => {
+                    setRecaptchaResolved(true);
+                    setRecaptcha(recaptcha)
+
+                },
+    
+                'expired-callback': () => {
+                    setRecaptchaResolved(false);
+                },
+            
+            })
+            const confirmation = await signInWithPhoneNumber(firebaseAuth, phoneNumber, recaptcha);
+            setConfirmationResult(confirmation);
+            console.log("confirmation:", confirmation);
+        } catch (error) {
+            console.error(error)
+            
+        } 
+
+    }
     useEffect(() => {
         if (isMobilePhone(phoneNumber)) {
             setDisableSendOTP(false);
