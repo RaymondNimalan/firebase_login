@@ -10,6 +10,10 @@ const SignUp = (props: SignUpProps) => {
     const [disableSubmitEmail, setDisableSubmitEmail] = useState(true);
     const [disableSendOTP, setDisableSendOTP] = useState(true);
     const [disableSubmitPhone, setDisableSubmitPhone] = useState(true);
+    const [recaptcha, setRecaptcha] = useState<RecaptchaVerifier | null>(null);
+    const [OTPCode, setOTPCode] = useState('');
+    const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+    const [recaptchaResolved, setRecaptchaResolved] = useState(false)
     useEffect(() => {
         if (isMobilePhone(phoneNumber)) {
             setDisableSendOTP(false);
