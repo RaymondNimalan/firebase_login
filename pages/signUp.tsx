@@ -65,8 +65,22 @@ const SignUp = (props: SignUpProps) => {
             <h2 className="text-lg font-semibold text-center mb-10">Sign Up</h2>
             <div className="px-4 flex p-4 pb-10 gap-4 flex-col">
                 <Input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    name="email"
+                    type="text"
+                />
+                
+                <Input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    name="password"
+                    type="password"
                 />
                 <LoadingButton
+                    onClick={signUpWithEmail}
                     disabled={disableSubmitEmail}
                 >
                     Sign Up with Email
@@ -80,13 +94,30 @@ const SignUp = (props: SignUpProps) => {
                     </div>
                 </div>
                 <Input
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Phone Number"
+                    name="phoneNumber"
+                    type="text"
+                />
+                {!recaptchaResolved ? (<div id="recaptcha"/>) : null}
+                <LoadingButton
+                    onClick={sendOTP}
                     disabled={disableSendOTP}
                 >
                     Send OTP
                 </LoadingButton>
                 <Input
+                    value={OTPCode}
+                    onChange={(e) => setOTPCode(e.target.value)}
+                    placeholder="code"
+                    name="code"
+                    type="text"
                 />
                 <LoadingButton
+                    onClick={handleCreateUserAndLogin}
+                    // loading={verifyPhoneNumberLoading}
+                    // loadingText="Verifying..."
                     disabled={disableSubmitPhone}
                 >
                     Sign Up with Phone Number
